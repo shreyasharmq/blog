@@ -26,29 +26,6 @@ class App extends Component {
       description: e.target.value
     })
   }
-  addArticle = () => {
-    //create a new article object
-    if (this.state.title.length) {
-      const newArticle = {
-        id: Math.floor(Math.random() * 10000),
-        title: this.state.title,
-        snippet: this.state.snippet,
-        description: this.state.description,
-        time: Date()
-      }
-
-      this.resetArticle()
-      this.setState({
-        blogs: [
-          ...this.state.blogs, newArticle
-        ]
-      })
-    }
-
-    //validate if the title is not blank
-
-    //if all is well, append the new article to the blogs
-  }
   resetArticle = () => {
     this.setState({
       title: '',
@@ -56,16 +33,9 @@ class App extends Component {
       snippet: ''
     })
   }
+  addArticle = () => { }
+
   deleteArticle = (articleToDelete) => {
-    const index = this.state.blogs.indexOf(articleToDelete)
-    //make a new list without that index
-    const listBefore = this.state.blogs.slice(0, index)
-    const listAfterIndex = this.state.blogs.slice(index + 1)
-    const newList = [...listBefore, ...listAfterIndex]
-    //pass new list to state
-    this.setState({
-      blogs: newList
-    })
   }
   render() {
     return (
@@ -91,18 +61,10 @@ class App extends Component {
         <Card.Group>
           {this.state.blogs.map((blog) => <Card key={blog.id} fluid>
             <Card.Content>
-              <Card.Header>
-                {blog.title}
-              </Card.Header>
-              <Card.Meta>
-                {moment(blog.time).fromNow}
-              </Card.Meta>
-              <Card.Meta>
-                {blog.snippet}
-              </Card.Meta>
-              <Card.Description>
-                {blog.description}
-              </Card.Description>
+              <Card.Header>{blog.title}</Card.Header>
+              <Card.Meta>{moment(blog.time).fromNow()}</Card.Meta>
+              <Card.Meta>{blog.snippet}</Card.Meta>
+              <Card.Description>{blog.description}</Card.Description>
             </Card.Content>
             <Button onClick={() => this.deleteArticle(blog)}> Delete </Button>
           </Card>)}
